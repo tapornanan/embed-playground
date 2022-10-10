@@ -2,7 +2,7 @@
 export default {
   data() {
     return {
-      width: 320,
+      width: 480,
       height: 0,
       aspect: 9 / 16,
       embedURL: "http://localhost:3001/embed/movie/o4MDXg3mqj6A/?autoplay=true",
