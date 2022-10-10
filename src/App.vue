@@ -6,7 +6,7 @@ export default {
       height: 0,
       aspect: 9 / 16,
       embedURL:
-        "https://test.trueid.id/embed/snippets/dist/latest/embed.min.js",
+        "https://test.trueid.id/embed/movie/o4MDXg3mqj6A/?autoplay=true",
     };
   },
   computed: {
