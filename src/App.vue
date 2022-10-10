@@ -22,32 +22,38 @@ export default {
 </script>
 
 <template>
-  <section>
-    <h4>Embed Tester <button @click="onReload">Reload</button></h4>
-    <p>
-      Calculated embed width: <strong>({{ width }}px)</strong> and height:
-      <strong>({{ calcHeight }}px)</strong>
-    </p>
-    <label for="embedWidth">Embed Width</label>
-    <input type="range" id="embedWidth" v-model="width" max="800" min="300" />
-    <hr />
-    <label for="embedURL"> Embed URL </label>
-    <input
-      type="text"
-      id="embedURL"
-      v-model="embedURL"
-      placeholder="place embed URL here"
-    />
-  </section>
-  <iframe
-    :src="embedURL"
-    :width="`${width}px`"
-    :height="`${calcHeight}px`"
-    frameborder="0"
-  ></iframe>
+  <div class="container">
+    <section>
+      <h4>Embed Tester <button @click="onReload">Reload</button></h4>
+      <p>
+        Calculated embed width: <strong>({{ width }}px)</strong> and height:
+        <strong>({{ calcHeight }}px)</strong>
+      </p>
+      <label for="embedWidth">Embed Width</label>
+      <input type="range" id="embedWidth" v-model="width" max="800" min="300" />
+      <hr />
+      <label for="embedURL"> Embed URL </label>
+      <input
+        type="text"
+        id="embedURL"
+        v-model="embedURL"
+        placeholder="place embed URL here"
+      />
+    </section>
+    <iframe
+      :src="embedURL"
+      :width="`${width}px`"
+      :height="`${calcHeight}px`"
+      frameborder="0"
+      data-trueidplayer-float="true"
+    ></iframe>
+  </div>
 </template>
 
 <style lang="scss">
+.container {
+  height: 500vh;
+}
 section {
   text-align: left;
   margin-bottom: 3rem;
