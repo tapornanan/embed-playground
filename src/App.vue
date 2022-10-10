@@ -5,7 +5,8 @@ export default {
       width: 480,
       height: 0,
       aspect: 9 / 16,
-      embedURL: "http://localhost:3001/embed/movie/o4MDXg3mqj6A/?autoplay=true",
+      embedURL:
+        "https://test.trueid.id/embed/snippets/dist/latest/embed.min.js",
     };
   },
   computed: {
@@ -16,6 +17,17 @@ export default {
   methods: {
     onReload() {
       window.location.reload();
+    },
+  },
+  watch: {
+    embedURL(val) {
+      if (val) {
+        let divScripts = document.getElementById("load-script");
+        let newScript = document.createElement("script");
+        newScript.src =
+          "https://test.trueid.id/embed/snippets/dist/latest/embed.min.js";
+        divScripts.appendChild(newScript);
+      }
     },
   },
 };
@@ -40,6 +52,7 @@ export default {
         placeholder="place embed URL here"
       />
     </section>
+    <div id="load-script"></div>
     <iframe
       :src="embedURL"
       :width="`${width}px`"
