@@ -5,8 +5,12 @@ export default {
       width: 480,
       height: 0,
       aspect: 9 / 16,
-      embedURL:
+      embedURL: "",
+      links: [
         "https://test.trueid.id/embed/movie/o4MDXg3mqj6A/?autoplay=true",
+        "http://localhost:3001/embed/movie/o4MDXg3mqj6A/?autoplay=true",
+        "http://localhost:3001/embed/series/EY50PNxQgzOl/EY50PNxQgzOl/love-on-the-island/?autoplay=true",
+      ],
     };
   },
   computed: {
@@ -17,6 +21,9 @@ export default {
   methods: {
     onReload() {
       window.location.reload();
+    },
+    onClickLink(link) {
+      this.embedURL = link;
     },
   },
   watch: {
@@ -37,6 +44,13 @@ export default {
   <div class="container">
     <section>
       <h4>Embed Tester <button @click="onReload">Reload</button></h4>
+
+      <div v-for="link in links" :key="link">
+        <button class="btn" type="button" @click="onClickLink(link)">
+          {{ link }}
+        </button>
+      </div>
+
       <p>
         Calculated embed width: <strong>({{ width }}px)</strong> and height:
         <strong>({{ calcHeight }}px)</strong>
@@ -83,6 +97,11 @@ section {
 
   button {
     margin-left: 20px;
+  }
+
+  .btn {
+    margin: 0 0 20px 0;
+    width: 100%;
   }
 }
 </style>
