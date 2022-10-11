@@ -14,7 +14,7 @@ jobs:
         with: 
           node-version: 14
           cache: npm
-      - run: yarn build
+      - run: yarn && yarn build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
