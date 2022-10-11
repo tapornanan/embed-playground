@@ -8,7 +8,6 @@ export default {
       embedURL: "",
       links: [
         "[protocol]://[env]/embed/movie/o4MDXg3mqj6A/?autoplay=true",
-        "[protocol]://[env]/embed/movie/o4MDXg3mqj6A/?autoplay=true",
         "[protocol]://[env]/embed/series/EY50PNxQgzOl/EY50PNxQgzOl/love-on-the-island/?autoplay=true",
         "[protocol]://[env]/embed/series/EY50PNxQgzOl/9E779ggKGdmE/love-on-the-island/?autoplay=true",
       ],
