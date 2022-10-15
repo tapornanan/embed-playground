@@ -42,6 +42,9 @@ export default {
 <template>
   <div class="container">
     <section>
+      <small>
+        <a href="https://github.com/tapornanan/embed-playground" target="_blank">Github Repo</a>
+      </small>
       <h4>Embed Tester <button @click="onReload">Reload</button></h4>
 
       <div v-for="link in links" :key="link">
