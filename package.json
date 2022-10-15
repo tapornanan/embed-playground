@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
     "format": "prettier .  --write",
-    "deploy": "yarn build && firebase deploy --only hosting"
+    "deploy": "yarn build && firebase deploy --only hosting",
+    "prepare": "husky install"
   },
   "dependencies": {
     "vue": "^3.2.37"
@@ -24,6 +25,7 @@
     "typescript": "^4.6.4",
     "vite": "^3.1.0",
     "vite-plugin-eslint": "^1.8.1",
-    "vue-tsc": "^0.40.4"
+    "vue-tsc": "^0.40.4",
+    "husky": "^8.0.0"
   }
 }

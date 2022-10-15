@@ -1,70 +1,34 @@
-<script>
-export default {
-  data() {
-    return {
-      width: 480,
-      height: 0,
-      aspect: 9 / 16,
-      embedURL: "",
-      links: [
-        "[protocol]://[env]/embed/movie/o4MDXg3mqj6A/?autoplay=true",
-        "[protocol]://[env]/embed/series/EY50PNxQgzOl/EY50PNxQgzOl/love-on-the-island/?autoplay=true",
-        "[protocol]://[env]/embed/series/EY50PNxQgzOl/9E779ggKGdmE/love-on-the-island/?autoplay=true",
-      ],
-      env: ["dev", "test", "local"],
-      currentEnv: "test",
-      finalEmbedURL: "",
-    };
-  },
-  computed: {
-    calcHeight() {
-      return this.width * this.aspect;
-    },
-    currentProtocol() {
-      switch (this.currentEnv) {
-        case "dev":
-        case "test":
-          return "https";
-        default:
-          return "http";
-      }
-    },
-    currentEnvironment() {
-      switch (this.currentEnv) {
-        case "dev":
-          return "dev.trueid.id";
-        case "test":
-          return "test.trueid.id";
-        default:
-          return "localhost:3001";
-      }
-    },
-  },
-  methods: {
-    onReload() {
-      window.location.reload();
-    },
-    onClickLink(link) {
-      this.embedURL = link;
-    },
-    getTransformURL(link) {
-      return link
-        .replace("[env]", this.currentEnvironment)
-        .replace("[protocol]", this.currentProtocol);
-    },
-  },
-  watch: {
-    embedURL(val) {
-      if (val) {
-        this.finalEmbedURL = this.getTransformURL(this.embedURL);
+<script lang="ts">
+import useAspectRatio from "./hooks/useAspectRatio";
+import useLinks from './hooks/useLinks'
+import useScript from './hooks/useScript'
 
-        let divScripts = document.getElementById("load-script");
-        let newScript = document.createElement("script");
-        newScript.src =
-          "https://test.trueid.id/embed/snippets/dist/latest/embed.min.js";
-        divScripts.appendChild(newScript);
-      }
-    },
+export default {
+  setup() {
+    const { width, height } = useAspectRatio();
+    const {
+      links,
+      env,
+      currentEnv,
+      embedURL,
+      transformedEmbedURL,
+      getTransformedURL,
+      onChangeEmbedURL
+    } = useLinks()
+
+    useScript(embedURL);
+
+    return {
+      width,
+      height,
+      links,
+
+      env,
+      currentEnv,
+      getTransformedURL,
+      onChangeEmbedURL,
+      transformedEmbedURL
+    };
   },
 };
 </script>
@@ -72,17 +36,17 @@ export default {
 <template>
   <div class="container">
     <section>
-      <h4>Embed Tester <button @click="onReload">Reload</button></h4>
+      <h4>Embed Tester <button @click="">Reload</button></h4>
 
       <div v-for="link in links" :key="link">
-        <button class="btn" type="button" @click="onClickLink(link)">
-          {{ getTransformURL(link) }}
+        <button class="btn" type="button" @click="onChangeEmbedURL(link)">
+          {{ getTransformedURL(link) }}
         </button>
       </div>
 
       <p>
         Calculated embed width: <strong>({{ width }}px)</strong> and height:
-        <strong>({{ calcHeight }}px)</strong>
+        <strong>({{ height }}px)</strong>
       </p>
 
       <label for="embedWidth">Embed Width</label>
@@ -96,22 +60,12 @@ export default {
       <hr />
 
       <label for="embedURL"> Embed URL </label>
-      <input
-        type="text"
-        id="embedURL"
-        v-model="finalEmbedURL"
-        placeholder="place embed URL here"
-      />
+      <input type="text" id="embedURL" v-model="transformedEmbedURL" placeholder="place embed URL here" />
     </section>
 
     <div id="load-script"></div>
-    <iframe
-      :src="finalEmbedURL"
-      :width="`${width}px`"
-      :height="`${calcHeight}px`"
-      frameborder="0"
-      data-trueidplayer-float="true"
-    ></iframe>
+    <iframe :src="transformedEmbedURL" :width="`${width}px`" :height="`${height}px`" frameborder="0"
+      data-trueidplayer-float="true"></iframe>
   </div>
 </template>
 
@@ -119,6 +73,7 @@ export default {
 .container {
   height: 500vh;
 }
+
 section {
   text-align: left;
   margin-bottom: 3rem;
