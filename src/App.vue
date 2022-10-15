@@ -18,7 +18,13 @@ export default {
 
     useScript(embedURL);
 
+    const onReload = () => {
+      window.location.reload();
+    }
+
     return {
+      onReload,
+
       width,
       height,
       links,
@@ -36,7 +42,7 @@ export default {
 <template>
   <div class="container">
     <section>
-      <h4>Embed Tester <button @click="">Reload</button></h4>
+      <h4>Embed Tester <button @click="onReload">Reload</button></h4>
 
       <div v-for="link in links" :key="link">
         <button class="btn" type="button" @click="onChangeEmbedURL(link)">
